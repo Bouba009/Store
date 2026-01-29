@@ -50,7 +50,9 @@
         /* --- Header & Layout --- */
         header { background: var(--white); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
         .logo-area h2 { color: var(--main-color); font-weight: 800; cursor: pointer; }
-        .nav-icons { display: flex; gap: 15px; font-size: 1.2rem; color: #555; }
+        .nav-icons { display: flex; gap: 20px; font-size: 1.2rem; color: #555; }
+        .nav-icons i { cursor: pointer; transition: 0.2s; }
+        .nav-icons i:hover { color: var(--main-color); }
         
         .page-section { display: none; animation: fadeIn 0.4s; }
         .page-section.active { display: block; }
@@ -124,12 +126,11 @@
     <!-- Header -->
     <header>
         <div class="logo-area">
-            <!-- النقر المزدوج هنا للدخول للأدمن -->
-            <h2 id="store-title" ondblclick="nav('admin')">اسم المتجر</h2> 
+            <h2 id="store-title">اسم المتجر</h2>
         </div>
         <div class="nav-icons">
             <i class="fas fa-home" onclick="nav('home')"></i>
-            <!-- تم إخفاء أيقونة الأدمن لزيادة الخصوصية -->
+            <i class="fas fa-user" onclick="nav('admin')"></i>
         </div>
     </header>
 
@@ -237,10 +238,11 @@
     <!-- ADMIN LOGIN (Hidden) -->
     <div id="view-login" class="page-section">
         <div style="max-width:350px; margin: 80px auto; padding: 40px; background: white; text-align: center; border-radius: 12px; box-shadow: var(--shadow);">
-            <h3 style="margin-bottom: 20px;">مدخل المسؤولين</h3>
+            <div style="margin-bottom: 20px; font-size: 3rem; color: #ddd;"><i class="fas fa-user-circle"></i></div>
+            <h3 style="margin-bottom: 20px;">تسجيل الدخول</h3>
             <input type="text" id="adm-user" placeholder="اسم المستخدم">
             <input type="password" id="adm-pass" placeholder="كلمة المرور">
-            <button onclick="login()" class="btn btn-primary">تسجيل الدخول</button>
+            <button onclick="login()" class="btn btn-primary">دخول</button>
         </div>
     </div>
 
@@ -268,7 +270,7 @@
                 </div>
                 <div class="stat-card">
                     <span class="stat-label">زيارات الموقع</span>
-                    <span class="stat-num">∞</span> <!-- يمكن ربطه بـ Analytics لاحقاً -->
+                    <span class="stat-num">∞</span>
                 </div>
             </div>
 
@@ -434,6 +436,25 @@
                 document.getElementById('view-' + view).classList.add('active');
             }
             window.scrollTo(0,0);
+            
+            // Logic for URL Handling: If going home, clear the product query params
+            if(view === 'home') {
+                const cleanUrl = window.location.pathname;
+                window.history.pushState(null, '', cleanUrl);
+            }
+        };
+
+        // Handle Browser Back Button
+        window.onpopstate = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pid = urlParams.get('product');
+            if(pid) {
+                // If back button brings us to a URL with ID, open it
+                openProduct(pid, false); // false = don't push state again
+            } else {
+                // If back button brings us to clean URL, go home
+                nav('home');
+            }
         };
 
         window.tab = (t) => {
@@ -447,7 +468,6 @@
         window.login = () => {
             const u = document.getElementById('adm-user').value;
             const p = document.getElementById('adm-pass').value;
-            // يمكنك تغيير كلمة السر هنا
             if(u === 'admin' && p === 'admin123') {
                 localStorage.setItem('adminAuth', 'true');
                 nav('admin');
@@ -508,13 +528,11 @@
         };
 
         window.saveProduct = async () => {
-            // Get Image
             let img = "";
             const imgType = document.querySelector('input[name="imgType"]:checked').value;
             if(imgType === 'url') img = document.getElementById('new-img-url').value;
             else img = document.getElementById('final-img-data').value;
 
-            // Validate
             if(!document.getElementById('new-name').value || !document.getElementById('new-price').value) 
                 return alert("الاسم والسعر مطلوبان");
 
@@ -529,18 +547,16 @@
                 hasClothSize: document.getElementById('has-cloth-size').checked,
                 clothType: document.getElementById('cloth-type-sel').value,
                 hasColors: document.getElementById('has-colors').checked,
-                colorsArray: tempColors // Save the array
+                colorsArray: tempColors 
             };
 
             const editId = document.getElementById('edit-prod-id').value;
 
             if(editId) {
-                // UPDATE MODE
-                if(!img) delete prodData.image; // Don't overwrite image if empty in update
+                if(!img) delete prodData.image; 
                 await updateDoc(doc(db, "products", editId), prodData);
                 alert("تم التعديل بنجاح");
             } else {
-                // CREATE MODE
                 await addDoc(collection(db, "products"), prodData);
                 alert("تم النشر بنجاح");
             }
@@ -553,20 +569,17 @@
             const p = products.find(x => x.id === id);
             if(!p) return;
 
-            // Fill Form
             document.getElementById('edit-prod-id').value = p.id;
             document.getElementById('new-name').value = p.name;
             document.getElementById('new-price').value = p.price;
             document.getElementById('new-old-price').value = p.oldPrice || "";
             document.getElementById('new-desc').value = p.desc || "";
             
-            // Image Preview
             if(p.image) {
                 document.getElementById('new-img-url').value = p.image;
                 document.getElementById('preview-img').src = p.image;
             }
 
-            // Options
             document.getElementById('has-shoe-size').checked = p.hasShoeSize || false;
             document.getElementById('has-cloth-size').checked = p.hasClothSize || false;
             document.getElementById('cloth-type-sel').value = p.clothType || "letters";
@@ -577,7 +590,6 @@
             toggleColorInput();
             renderColorTags();
 
-            // UI Change
             document.getElementById('form-header-text').innerText = "تعديل المنتج: " + p.name;
             document.getElementById('save-btn-txt').innerText = "حفظ التعديلات";
             document.getElementById('cancel-edit-btn').style.display = "inline-block";
@@ -636,7 +648,6 @@
                         });
                         startSlider();
                     }
-                    // Fill admin inputs
                     document.getElementById('set-name').value = d.name || "";
                     document.getElementById('set-marq').value = d.marquee || "";
                     document.getElementById('set-slider').value = d.slider || "";
@@ -651,13 +662,12 @@
                 const adminList = document.getElementById('admin-p-list');
                 list.innerHTML = ""; adminList.innerHTML = "";
                 
-                document.getElementById('st-products').innerText = snap.size; // Stats
+                document.getElementById('st-products').innerText = snap.size;
 
                 snap.forEach(d => {
                     const p = {id: d.id, ...d.data()};
                     products.push(p);
                     
-                    // User Grid
                     const discount = p.oldPrice ? Math.round(((p.oldPrice - p.price)/p.oldPrice)*100) : 0;
                     list.innerHTML += `
                         <div class="product-card" onclick="openProduct('${p.id}')">
@@ -666,211 +676,4 @@
                             <div class="p-info">
                                 <h3 class="p-title">${p.name}</h3>
                                 <div class="price-box">
-                                    <span class="new-price">${p.price} دج</span>
-                                    ${p.oldPrice ? `<span class="old-price">${p.oldPrice}</span>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    // Admin List Item (with Edit)
-                    adminList.innerHTML += `
-                        <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee; background:white;">
-                            <div style="display:flex; align-items:center; gap:15px;">
-                                <img src="${p.image}" width="50" height="50" style="object-fit:cover; border-radius:6px;">
-                                <div>
-                                    <b>${p.name}</b><br>
-                                    <small>${p.price} دج</small>
-                                </div>
-                            </div>
-                            <div>
-                                <button onclick="editP('${p.id}')" class="btn-secondary" style="padding:5px 10px; font-size:0.8rem; margin-left:5px;">تعديل</button>
-                                <button onclick="deleteP('${p.id}')" class="btn-danger" style="padding:5px 10px; font-size:0.8rem;">حذف</button>
-                            </div>
-                        </div>
-                    `;
-                });
-            });
-
-            // Load Orders (Admin)
-            onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
-                const tb = document.getElementById('orders-tbody');
-                tb.innerHTML = "";
-                let totalRev = 0;
-                document.getElementById('st-orders').innerText = snap.size;
-
-                snap.forEach(d => {
-                    const o = d.data();
-                    totalRev += Number(o.price);
-                    const dt = new Date(o.date).toLocaleDateString('ar-DZ');
-                    
-                    tb.innerHTML += `
-                        <tr>
-                            <td>${dt}</td>
-                            <td>
-                                <b>${o.custName}</b><br>
-                                <a href="tel:${o.custPhone}" style="color:blue;">${o.custPhone}</a><br>
-                                <span class="order-badge">${o.wilaya}</span>
-                            </td>
-                            <td>
-                                <b>${o.pName}</b>
-                                ${o.size ? `<br><small>المقاس: ${o.size}</small>` : ''}
-                                ${o.color ? `<br><small>اللون: ${o.color}</small>` : ''}
-                            </td>
-                            <td style="color:green; font-weight:bold;">${o.price} دج</td>
-                            <td><small>${o.address} - ${o.commune}</small></td>
-                        </tr>
-                    `;
-                });
-                document.getElementById('st-revenue').innerText = totalRev.toLocaleString() + " دج";
-            });
-        }
-
-        // --- SLIDER ANIM ---
-        function startSlider(){
-            let idx = 0;
-            setInterval(() => {
-                const slides = document.querySelectorAll('.slide-item');
-                if(slides.length > 0) {
-                    slides.forEach(s => s.style.opacity = 0);
-                    idx = (idx + 1) % slides.length;
-                    slides[idx].style.opacity = 1;
-                }
-            }, 3000);
-        }
-
-        // --- PRODUCT DETAILS & SELECTION LOGIC ---
-        window.openProduct = (id) => {
-            currentProd = products.find(p => p.id === id);
-            if(!currentProd) return;
-
-            // Fill Data (Shopify Layout)
-            document.getElementById('p-detail-img-container').innerHTML = `<img src="${currentProd.image}">`;
-            document.getElementById('p-detail-name').innerText = currentProd.name;
-            document.getElementById('p-detail-price').innerText = currentProd.price + " دج";
-            document.getElementById('p-detail-desc').innerText = currentProd.desc || "لا يوجد وصف";
-
-            document.getElementById('sum-name').innerText = currentProd.name;
-            document.getElementById('sum-price').innerText = currentProd.price + " دج";
-
-            // Generate Selectors
-            const container = document.getElementById('dynamic-selectors');
-            container.innerHTML = "";
-
-            // 1. Sizes
-            let sizes = [];
-            if(currentProd.hasShoeSize) {
-                sizes = [36,37,38,39,40,41,42,43,44,45];
-            } else if (currentProd.hasClothSize) {
-                if(currentProd.clothType === 'letters') sizes = ['S','M','L','XL','XXL','3XL'];
-                else sizes = [38,40,42,44,46,48];
-            }
-
-            if(sizes.length > 0) {
-                container.innerHTML += `<div class="form-group"><label>اختر المقاس:</label><div class="options-container" id="size-opts"></div></div>`;
-                const sizeDiv = document.getElementById('size-opts');
-                sizes.forEach(s => {
-                    const div = document.createElement('div');
-                    div.className = 'circle-option';
-                    div.innerText = s;
-                    div.onclick = function() {
-                        document.querySelectorAll('#size-opts .circle-option').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        document.getElementById('ord-size').value = s;
-                        updateSummary();
-                    };
-                    sizeDiv.appendChild(div);
-                });
-            } else {
-                document.getElementById('ord-size').value = "";
-            }
-
-            // 2. Colors (One by One)
-            if(currentProd.hasColors && currentProd.colorsArray && currentProd.colorsArray.length > 0) {
-                container.innerHTML += `<div class="form-group"><label>اختر اللون:</label><div class="options-container" id="col-opts"></div></div>`;
-                const colDiv = document.getElementById('col-opts');
-                currentProd.colorsArray.forEach(c => {
-                    const div = document.createElement('div');
-                    div.className = 'circle-option';
-                    div.innerText = c;
-                    div.onclick = function() {
-                        document.querySelectorAll('#col-opts .circle-option').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        document.getElementById('ord-color').value = c;
-                        updateSummary();
-                    };
-                    colDiv.appendChild(div);
-                });
-            } else {
-                document.getElementById('ord-color').value = "";
-            }
-
-            // Form Reset
-            document.getElementById('ord-pid').value = currentProd.id;
-            document.getElementById('ord-pname').value = currentProd.name;
-            document.getElementById('ord-price').value = currentProd.price;
-            document.getElementById('ord-size').value = "";
-            document.getElementById('ord-color').value = "";
-            document.getElementById('sum-opts').innerText = "";
-            
-            nav('product');
-        };
-
-        window.updateSummary = () => {
-            const s = document.getElementById('ord-size').value;
-            const c = document.getElementById('ord-color').value;
-            let txt = "";
-            if(s) txt += `المقاس: ${s} `;
-            if(c) txt += `| اللون: ${c}`;
-            document.getElementById('sum-opts').innerText = txt;
-        };
-
-        window.submitOrder = async (e) => {
-            e.preventDefault();
-            const p = currentProd;
-            const s = document.getElementById('ord-size').value;
-            const c = document.getElementById('ord-color').value;
-
-            // Validation
-            if((p.hasShoeSize || p.hasClothSize) && !s) return alert("يرجى اختيار المقاس");
-            if(p.hasColors && !c && p.colorsArray && p.colorsArray.length > 0) return alert("يرجى اختيار اللون");
-
-            const btn = e.target.querySelector('button[type="submit"]');
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الطلب...';
-
-            const order = {
-                pName: document.getElementById('ord-pname').value,
-                price: document.getElementById('ord-price').value,
-                custName: document.getElementById('ord-name').value,
-                custPhone: document.getElementById('ord-phone').value,
-                wilaya: document.getElementById('ord-wilaya').value,
-                commune: document.getElementById('ord-commune').value,
-                address: document.getElementById('ord-address').value,
-                size: s,
-                color: c,
-                date: new Date().toISOString()
-            };
-
-            await addDoc(collection(db, "orders"), order);
-            alert("تم استلام طلبك بنجاح! سنتصل بك قريباً للتأكيد.");
-            nav('home');
-            btn.disabled = false; btn.innerText = "تأكيد الطلب";
-            e.target.reset();
-        };
-
-        window.saveSettings = async () => {
-            const data = {
-                name: document.getElementById('set-name').value,
-                marquee: document.getElementById('set-marq').value,
-                slider: document.getElementById('set-slider').value,
-                theme: document.getElementById('set-theme').value
-            };
-            await setDoc(doc(db, "settings", "main"), data);
-            alert("تم الحفظ");
-            location.reload();
-        };
-
-        init();
-    </script>
-</body>
-</html>
+                                    <span class="new-
