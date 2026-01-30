@@ -14,80 +14,88 @@
             --bg-color: #f4f6f8;
             --white: #ffffff;
             --shadow: 0 4px 15px rgba(0,0,0,0.05);
-            --radius: 12px;
         }
 
+        /* Themes */
         body.theme-orange { --main-color: #ff6600; }
         body.theme-green { --main-color: #27ae60; }
         body.theme-blue { --main-color: #2980b9; }
         body.theme-purple { --main-color: #8e44ad; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; outline: none; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 60px; line-height: 1.6;}
+        body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 60px;}
         a { text-decoration: none; color: inherit; }
         
         /* --- General UI --- */
-        .btn { cursor: pointer; padding: 12px 25px; border-radius: var(--radius); border: none; font-weight: bold; transition: 0.3s; font-size: 1rem; }
-        .btn-primary { background: var(--main-color); color: white; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn { cursor: pointer; padding: 10px 20px; border-radius: 5px; border: none; font-weight: bold; transition: 0.3s; }
+        .btn-primary { background: var(--main-color); color: white; width: 100%; }
         .btn-danger { background: #e74c3c; color: white; }
-        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn:hover { opacity: 0.9; }
         
-        /* --- Modern Form Inputs --- */
-        .input-group { margin-bottom: 15px; text-align: right; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 700; color: #555; font-size: 0.9rem; }
-        .input-group input, .input-group select, .input-group textarea { 
-            width: 100%; padding: 12px 15px; border: 2px solid #eee; border-radius: var(--radius); 
-            background: #fff; transition: 0.3s; font-size: 1rem;
-        }
-        .input-group input:focus { border-color: var(--main-color); box-shadow: 0 0 0 4px rgba(255,102,0,0.1); }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; background: #fff; }
 
-        /* --- Circles Options --- */
-        .options-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; margin-bottom: 20px; }
+        /* --- Circles Options (Sizes/Colors) --- */
+        .options-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; margin-bottom: 15px; }
         .circle-option {
-            min-width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-            border: 2px solid #eee; border-radius: var(--radius); cursor: pointer; font-weight: bold;
-            transition: 0.2s; background: white; user-select: none; padding: 0 10px;
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            border: 2px solid #ddd; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 0.9rem;
+            transition: 0.2s; background: white; user-select: none;
         }
-        .circle-option.selected { background-color: var(--main-color); color: white; border-color: var(--main-color); transform: scale(1.05); }
+        .circle-option:hover { border-color: var(--main-color); }
+        .circle-option.selected { background-color: var(--main-color); color: white; border-color: var(--main-color); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        
+        /* For Colors specific */
+        .color-option { border-radius: 50%; width: 40px; height: 40px; border: 2px solid #ddd; cursor: pointer; }
+        .color-option.selected { border: 3px solid var(--main-color); transform: scale(1.1); }
 
-        /* --- Header --- */
-        header { background: var(--white); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        /* --- Header & Layout --- */
+        header { background: var(--white); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
         .logo-area h2 { color: var(--main-color); font-weight: 800; }
-        .nav-icons { display: flex; gap: 20px; font-size: 1.3rem; color: #555; }
-        .nav-icons i { cursor: pointer; transition: 0.3s; }
-        .nav-icons i:hover { color: var(--main-color); }
+        .nav-icons { display: flex; gap: 15px; font-size: 1.2rem; color: #555; }
         
         .page-section { display: none; animation: fadeIn 0.4s; }
         .page-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- Grid --- */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; max-width: 1200px; margin: auto; }
+        /* --- Product Grid --- */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; max-width: 1200px; margin: auto; }
         @media(min-width: 768px) { .grid { grid-template-columns: repeat(4, 1fr); } }
         
-        .product-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: 0.3s; position: relative;}
-        .p-img { width: 100%; height: 200px; object-fit: cover; }
-        .p-info { padding: 15px; }
-        .new-price { color: var(--main-color); font-weight: 800; font-size: 1.2rem; }
-        .old-price { text-decoration: line-through; color: #999; font-size: 0.9rem; margin-right: 8px; }
+        .product-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: 0.3s; position: relative;}
+        .product-card:hover { transform: translateY(-5px); }
+        .p-img { width: 100%; height: 180px; object-fit: cover; }
+        .p-info { padding: 10px; }
+        .price-box { display: flex; gap: 10px; align-items: center; margin-top: 5px; }
+        .new-price { color: var(--main-color); font-weight: bold; font-size: 1.1rem; }
+        .old-price { text-decoration: line-through; color: #999; font-size: 0.8rem; }
 
-        /* --- Modern Order Form --- */
-        .order-card { background: #fff; border: 1px solid #eee; border-radius: var(--radius); padding: 25px; margin-top: 20px; box-shadow: var(--shadow); }
-        .summary-box { background: #fdf2e9; border-right: 5px solid var(--main-color); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-
+        /* --- Product Details --- */
+        .product-view-container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; }
+        
         /* --- Admin --- */
         .admin-panel { padding: 20px; max-width: 1000px; margin: auto; }
-        .admin-tabs { display: flex; gap: 5px; margin-bottom: 20px; overflow-x: auto; }
-        .tab-btn { background: #eee; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; white-space: nowrap; }
+        .admin-tabs { display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .tab-btn { background: #eee; padding: 10px 20px; border: none; cursor: pointer; }
         .tab-btn.active { background: var(--main-color); color: white; }
-        .admin-content { display: none; background: white; padding: 20px; border-radius: var(--radius); }
+        .admin-content { display: none; }
         .admin-content.active { display: block; }
+        
+        /* --- Toggle Switch --- */
+        .toggle-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; background: #f9f9f9; padding: 10px; border-radius: 5px;}
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--main-color); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
     </style>
 </head>
 <body class="theme-orange">
 
+    <!-- Header -->
     <header>
-        <div class="logo-area" onclick="nav('home')" style="cursor:pointer">
+        <div class="logo-area" onclick="nav('home')" style="cursor:pointer;">
             <h2 id="store-title">اسم المتجر</h2>
         </div>
         <div class="nav-icons">
@@ -98,119 +106,164 @@
 
     <!-- HOME VIEW -->
     <div id="view-home" class="page-section active">
-        <div style="position: relative; height: 280px; overflow: hidden; border-radius: 0 0 20px 20px;" id="main-slider"></div>
-        
-        <div style="background: var(--main-color); color: white; padding: 10px; overflow: hidden; white-space: nowrap; font-size: 0.9rem;">
-            <div style="display: inline-block; animation: marquee 20s linear infinite; font-weight: bold;" id="marquee-txt">
+        <!-- Slider -->
+        <div style="position: relative; height: 250px; overflow: hidden;" id="main-slider"></div>
+
+        <!-- Marquee -->
+        <div style="background: var(--main-color); color: white; padding: 8px; overflow: hidden; white-space: nowrap;">
+            <div style="display: inline-block; animation: marquee 15s linear infinite; font-weight: bold;" id="marquee-txt">
                 عرض خاص وحصري - التوصيل متوفر لـ 58 ولاية والدفع عند الاستلام
             </div>
+            <style>@keyframes marquee { 0% { transform: translateX(-100vw); } 100% { transform: translateX(100vw); } }</style>
         </div>
 
-        <h2 style="text-align: center; margin: 30px 0 10px;">أحدث المنتجات</h2>
-        <div class="grid" id="products-list"></div>
+        <!-- Products -->
+        <h2 style="text-align: center; margin: 20px 0;">أحدث المنتجات</h2>
+        <div class="grid" id="products-list">
+            <p style="text-align:center; width:200%;">جاري التحميل...</p>
+        </div>
     </div>
 
     <!-- PRODUCT DETAIL VIEW -->
     <div id="view-product" class="page-section">
-        <div style="max-width: 800px; margin: 20px auto; padding: 0 15px;">
-            <button onclick="nav('home')" style="background:none; border:none; color:var(--main-color); margin-bottom:15px; cursor:pointer; font-weight:bold; font-size:1rem;">
-                <i class="fas fa-arrow-right"></i> العودة للمتجر
+        <div class="product-view-container">
+            <button onclick="nav('home')" style="background:none; border:none; color:#777; margin-bottom:10px; cursor:pointer;">
+                <i class="fas fa-arrow-right"></i> رجوع
             </button>
+            <div id="p-detail-content"></div>
+
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
             
-            <div id="p-detail-content" style="background:white; padding:20px; border-radius:var(--radius); box-shadow: var(--shadow);"></div>
-
-            <div class="order-card">
-                <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-shopping-cart" style="color:var(--main-color)"></i> تأكيد الطلب
-                </h3>
+            <form id="order-form" onsubmit="submitOrder(event)">
+                <h3 style="color: var(--main-color); margin-bottom: 15px;">استمارة الطلب</h3>
                 
-                <form id="order-form" onsubmit="submitOrder(event)">
-                    <input type="hidden" id="ord-size">
-                    <input type="hidden" id="ord-color">
+                <input type="hidden" id="ord-pid">
+                <input type="hidden" id="ord-pname">
+                <input type="hidden" id="ord-price">
+                <input type="hidden" id="ord-size" value="">
+                <input type="hidden" id="ord-color" value="">
 
-                    <div id="dynamic-selectors"></div>
+                <label>الاسم واللقب:</label>
+                <input type="text" id="ord-name" required placeholder="أدخل اسمك الكامل">
+                
+                <label>رقم الهاتف:</label>
+                <input type="tel" id="ord-phone" required placeholder="05/06/07...">
 
-                    <div class="summary-box" id="summary-area" style="display:none;">
-                        <p style="font-weight: bold; color: var(--main-color);">ملخص الاختيار:</p>
-                        <p id="order-summary">يرجى اختيار المقاس واللون</p>
-                    </div>
+                <label>الولاية:</label>
+                <select id="ord-wilaya" onchange="loadCommunes()" required>
+                    <option value="">-- اختر الولاية --</option>
+                </select>
 
-                    <div class="input-group">
-                        <label>الاسم الكامل:</label>
-                        <input type="text" id="ord-name" required placeholder="مثال: محمد أحمد">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>رقم الهاتف:</label>
-                        <input type="tel" id="ord-phone" required placeholder="05 / 06 / 07XXXXXXXX">
-                    </div>
+                <label>البلدية:</label>
+                <select id="ord-commune" required disabled>
+                    <option value="">-- اختر البلدية أولاً --</option>
+                </select>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div class="input-group">
-                            <label>الولاية:</label>
-                            <select id="ord-wilaya" onchange="loadCommunes()" required></select>
-                        </div>
-                        <div class="input-group">
-                            <label>البلدية:</label>
-                            <select id="ord-commune" required disabled>
-                                <option value="">اختر الولاية أولاً</option>
-                            </select>
-                        </div>
-                    </div>
+                <div id="dynamic-selectors"></div>
 
-                    <button type="submit" class="btn btn-primary" style="margin-top: 15px; font-size: 1.2rem; padding: 15px;">
-                        إرسال الطلب الآن
-                    </button>
-                    <p style="text-align: center; font-size: 0.8rem; color: #777; margin-top: 10px;">الدفع يكون عند الاستلام يد بيد</p>
-                </form>
-            </div>
+                <div style="margin-top: 20px; background: #e8f5e9; padding: 15px; border-radius: 5px;">
+                    <p style="font-weight: bold;">ملخص الطلب:</p>
+                    <p id="order-summary">...</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px;">تأكيد الطلب الآن</button>
+            </form>
         </div>
     </div>
 
-    <!-- ADMIN & LOGIN (Same as before but with minor styling) -->
+    <!-- ADMIN LOGIN -->
     <div id="view-login" class="page-section">
-        <div style="max-width:350px; margin: 80px auto; padding: 30px; background: white; text-align: center; box-shadow: var(--shadow); border-radius:var(--radius);">
-            <h3>دخول الإدارة</h3><br>
-            <div class="input-group"><input type="text" id="adm-user" placeholder="اسم المستخدم"></div>
-            <div class="input-group"><input type="password" id="adm-pass" placeholder="كلمة المرور"></div>
+        <div style="max-width:350px; margin: 50px auto; padding: 30px; background: white; text-align: center; box-shadow: var(--shadow);">
+            <h3>دخول المدير</h3>
+            <input type="text" id="adm-user" placeholder="User">
+            <input type="password" id="adm-pass" placeholder="Pass">
             <button onclick="login()" class="btn btn-primary">دخول</button>
         </div>
     </div>
 
+    <!-- ADMIN DASHBOARD -->
     <div id="view-admin" class="page-section">
         <div class="admin-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h2>لوحة التحكم</h2>
-                <button onclick="logout()" class="btn btn-danger" style="padding:8px 15px;">خروج</button>
+                <button onclick="logout()" class="btn btn-danger" style="width:auto;">خروج</button>
             </div>
+
             <div class="admin-tabs">
                 <button class="tab-btn active" onclick="tab('orders')">الطلبات</button>
                 <button class="tab-btn" onclick="tab('products')">إضافة منتج</button>
-                <button class="tab-btn" onclick="tab('list')">المنتجات</button>
+                <button class="tab-btn" onclick="tab('list')">قائمة المنتجات</button>
                 <button class="tab-btn" onclick="tab('settings')">الإعدادات</button>
             </div>
-            <div id="tab-orders" class="admin-content active"><table style="width:100%; text-align:right;" border="1" cellpadding="10" cellspacing="0" id="orders-table"><thead><tr style="background:#eee"><th>الزبون</th><th>المنتج</th><th>السعر</th></tr></thead><tbody id="orders-tbody"></tbody></table></div>
-            <div id="tab-products" class="admin-content">
-                <div class="input-group"><label>اسم المنتج</label><input type="text" id="new-name"></div>
-                <div style="display:flex; gap:10px;"><div class="input-group"><label>السعر</label><input type="number" id="new-price"></div><div class="input-group"><label>السعر القديم</label><input type="number" id="new-old-price"></div></div>
-                <div class="input-group"><label>وصف المنتج</label><textarea id="new-desc"></textarea></div>
-                <div class="input-group"><label>رابط الصورة</label><input type="text" id="new-img-url"></div>
-                <div style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px;">
-                    <p><b>خيارات المنتج:</b></p>
-                    <label><input type="checkbox" id="has-shoe-size"> مقاسات أحذية</label><br>
-                    <label><input type="checkbox" id="has-cloth-size"> مقاسات ملابس</label>
-                    <select id="cloth-type-sel"><option value="letters">S-XXL</option><option value="numbers">36-46</option></select><br>
-                    <label><input type="checkbox" id="has-colors"> تفعيل الألوان</label>
-                    <input type="text" id="color-list" placeholder="أحمر, أزرق, أسود">
-                </div>
-                <button onclick="addProduct()" class="btn btn-primary">نشر المنتج</button>
+
+            <div id="tab-orders" class="admin-content active">
+                <table style="width:100%; border-collapse:collapse;" border="1" bordercolor="#eee">
+                    <thead style="background:#f9f9f9;">
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>معلومات الزبون</th>
+                            <th>المنتج</th>
+                            <th>الخيارات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody"></tbody>
+                </table>
             </div>
-            <div id="tab-list" class="admin-content"><div id="admin-p-list"></div></div>
+
+            <div id="tab-products" class="admin-content">
+                <div style="background:white; padding:20px; border-radius:8px;">
+                    <h3>إضافة منتج جديد</h3>
+                    <input type="text" id="new-name" placeholder="اسم المنتج">
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="new-price" placeholder="السعر (دج)">
+                        <input type="number" id="new-old-price" placeholder="السعر القديم (اختياري)">
+                    </div>
+                    <textarea id="new-desc" placeholder="وصف المنتج" rows="3"></textarea>
+                    
+                    <div style="margin-bottom:15px; border:1px solid #eee; padding:10px;">
+                        <label>صورة المنتج:</label><br>
+                        <input type="radio" name="imgType" value="url" checked onclick="toggleImgInput('url')"> رابط
+                        <input type="radio" name="imgType" value="file" onclick="toggleImgInput('file')"> رفع ملف
+                        
+                        <input type="text" id="new-img-url" placeholder="https://example.com/image.jpg" style="margin-top:5px;">
+                        <input type="file" id="new-img-file" style="display:none; margin-top:5px;" accept="image/*" onchange="convertBase64()">
+                        <input type="hidden" id="final-img-data">
+                    </div>
+
+                    <div class="toggle-wrapper">
+                        <label class="switch"><input type="checkbox" id="has-shoe-size"><span class="slider"></span></label>
+                        <span>تفعيل مقاسات الأحذية (36 - 45)</span>
+                    </div>
+
+                    <div class="toggle-wrapper">
+                        <label class="switch"><input type="checkbox" id="has-cloth-size" onchange="toggleClothType()"><span class="slider"></span></label>
+                        <span>تفعيل مقاسات الملابس</span>
+                        <select id="cloth-type-sel" style="width:auto; margin:0 10px; display:none;">
+                            <option value="letters">أحرف (S, M, L...)</option>
+                            <option value="numbers">أرقام (36, 38, 40...)</option>
+                        </select>
+                    </div>
+
+                    <div class="toggle-wrapper">
+                        <label class="switch"><input type="checkbox" id="has-colors"><span class="slider"></span></label>
+                        <span>تفعيل الألوان</span>
+                    </div>
+                    <input type="text" id="color-list" placeholder="اكتب الألوان مفصولة بفاصلة (مثال: أحمر, أزرق, أسود)" style="display:none;">
+
+                    <button onclick="addProduct()" class="btn btn-primary">حفظ ونشر المنتج</button>
+                </div>
+            </div>
+
+            <div id="tab-list" class="admin-content">
+                <div id="admin-p-list"></div>
+            </div>
+
             <div id="tab-settings" class="admin-content">
-                 <div class="input-group"><label>اسم المتجر</label><input type="text" id="set-name"></div>
-                 <div class="input-group"><label>شريط العروض</label><input type="text" id="set-marq"></div>
-                 <div class="input-group"><label>الصور (روابط)</label><textarea id="set-slider"></textarea></div>
-                 <button onclick="saveSettings()" class="btn btn-primary">حفظ</button>
+                <label>اسم المتجر:</label> <input type="text" id="set-name">
+                <label>شريط العروض (Marquee):</label> <input type="text" id="set-marq">
+                <label>روابط صور السلايدر (رابط في كل سطر):</label> 
+                <textarea id="set-slider" rows="5"></textarea>
+                <button onclick="saveSettings()" class="btn btn-primary">حفظ الإعدادات</button>
             </div>
         </div>
     </div>
@@ -232,197 +285,110 @@
         const db = getFirestore(app);
 
         const dzData = [
-            { code: "01", name: "أدرار", communes: ["أدرار", "أولف", "رقان"] },
+            { code: "01", name: "أدرار", communes: ["أدرار", "تامنطيت", "أولف", "رقان"] },
             { code: "02", name: "الشلف", communes: ["الشلف", "تنس", "بوقادير"] },
-            { code: "06", name: "بجاية", communes: ["بجاية", "أقبو", "القصر"] },
-            { code: "09", name: "البليدة", communes: ["البليدة", "بوفاريك", "العفرون"] },
-            { code: "16", name: "الجزائر العاصمة", communes: ["الرويبة", "باب الزوار", "الشراقة", "القبة"] },
-            { code: "19", name: "سطيف", communes: ["سطيف", "العلمة", "عين أرنات"] },
-            { code: "31", name: "وهران", communes: ["وهران", "عين الترك", "السانيا"] }
-            // يمكن إضافة البقية هنا
+            { code: "16", name: "الجزائر العاصمة", communes: ["باب الواد", "الأبيار", "رويبة", "حسين داي"] },
+            { code: "31", name: "وهران", communes: ["وهران", "عين الترك", "ارزيو"] },
+            { code: "19", name: "سطيف", communes: ["سطيف", "العلمة", "بوقاعة"] }
         ];
 
-        let products = [];
-        let currentProd = null;
-
-        // --- Routing Logic ---
-        window.nav = (view, prodName = null) => {
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            
-            if(view === 'product' && prodName) {
-                const cleanName = decodeURIComponent(prodName).replace(/-/g, ' ');
-                const p = products.find(item => item.name === cleanName);
-                if(p) {
-                    currentProd = p;
-                    renderProductPage(p);
-                    window.history.pushState({view: 'product', name: prodName}, "", `/product/${prodName}`);
-                    document.getElementById('view-product').classList.add('active');
-                } else {
-                    nav('home');
-                }
-            } else if(view === 'admin') {
-                if(localStorage.getItem('adminAuth')) document.getElementById('view-admin').classList.add('active');
-                else document.getElementById('view-login').classList.add('active');
-            } else {
-                window.history.pushState({view: 'home'}, "", "/");
-                document.getElementById('view-home').classList.add('active');
-            }
-            window.scrollTo(0,0);
-        };
-
-        window.onpopstate = (e) => {
-            if(e.state && e.state.view === 'product') nav('product', e.state.name);
-            else nav('home');
-        };
-
-        // --- Core Functions ---
         window.loadWilayas = () => {
             const sel = document.getElementById('ord-wilaya');
-            sel.innerHTML = '<option value="">اختر الولاية</option>';
-            dzData.forEach(w => sel.innerHTML += `<option value="${w.code}">${w.code}-${w.name}</option>`);
+            sel.innerHTML = '<option value="">-- اختر الولاية --</option>';
+            dzData.forEach(w => { sel.innerHTML += `<option value="${w.code}">${w.code} - ${w.name}</option>`; });
         };
 
         window.loadCommunes = () => {
             const wCode = document.getElementById('ord-wilaya').value;
             const comSel = document.getElementById('ord-commune');
-            comSel.innerHTML = '<option value="">اختر البلدية</option>';
-            const wilaya = dzData.find(w => w.code === wCode);
-            if(wilaya) {
-                wilaya.communes.forEach(c => comSel.innerHTML += `<option value="${c}">${c}</option>`);
-                comSel.disabled = false;
-            }
+            comSel.innerHTML = '<option value="">-- اختر البلدية --</option>';
+            if(wCode) {
+                const wilaya = dzData.find(w => w.code === wCode);
+                if(wilaya) {
+                    wilaya.communes.forEach(c => { comSel.innerHTML += `<option value="${c}">${c}</option>`; });
+                    comSel.disabled = false;
+                }
+            } else comSel.disabled = true;
         };
 
-        const renderProductPage = (p) => {
-            document.getElementById('p-detail-content').innerHTML = `
-                <img src="${p.image}" style="width:100%; border-radius:10px; margin-bottom:15px;">
-                <h1>${p.name}</h1>
-                <p style="color:#666; margin:10px 0;">${p.desc || ''}</p>
-                <div style="font-size:1.5rem; color:var(--main-color); font-weight:800;">${p.price} دج</div>
-            `;
-            
-            const container = document.getElementById('dynamic-selectors');
-            container.innerHTML = "";
-            document.getElementById('ord-size').value = "";
-            document.getElementById('ord-color').value = "";
-            document.getElementById('summary-area').style.display = "none";
+        let products = [];
+        let currentProd = null;
 
-            // Sizes
-            let sizes = [];
-            if(p.hasShoeSize) sizes = [36,37,38,39,40,41,42,43,44,45];
-            else if(p.hasClothSize) sizes = p.clothType==='letters'?['S','M','L','XL','XXL']: [36,38,40,42,44];
-
-            if(sizes.length > 0) {
-                container.innerHTML += `<label style="font-weight:bold; display:block; margin-bottom:10px;">اختر المقاس:</label><div class="options-container" id="size-opts"></div>`;
-                sizes.forEach(s => {
-                    const div = document.createElement('div');
-                    div.className = 'circle-option';
-                    div.innerText = s;
-                    div.onclick = function() {
-                        document.querySelectorAll('#size-opts .circle-option').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        document.getElementById('ord-size').value = s;
-                        updateSummary();
-                    };
-                    document.getElementById('size-opts').appendChild(div);
-                });
+        window.nav = (view, prodName = null) => {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            if(view === 'admin') {
+                if(localStorage.getItem('adminAuth')) document.getElementById('view-admin').classList.add('active');
+                else document.getElementById('view-login').classList.add('active');
+            } else if (view === 'product' && prodName) {
+                document.getElementById('view-product').classList.add('active');
+                window.history.pushState({}, '', '/product/' + prodName);
             } else {
-                document.getElementById('ord-size').value = "عادي";
+                document.getElementById('view-home').classList.add('active');
+                window.history.pushState({}, '', '/');
             }
+            window.scrollTo(0,0);
+        };
 
-            // Colors
-            if(p.hasColors && p.colorsList) {
-                const cols = p.colorsList.split(',').map(c => c.trim());
-                container.innerHTML += `<label style="font-weight:bold; display:block; margin-bottom:10px;">اختر اللون:</label><div class="options-container" id="col-opts"></div>`;
-                cols.forEach(c => {
-                    const div = document.createElement('div');
-                    div.className = 'circle-option';
-                    div.innerText = c;
-                    div.onclick = function() {
-                        document.querySelectorAll('#col-opts .circle-option').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        document.getElementById('ord-color').value = c;
-                        updateSummary();
-                    };
-                    document.getElementById('col-opts').appendChild(div);
-                });
-            } else {
-                document.getElementById('ord-color').value = "عادي";
+        window.tab = (t) => {
+            document.querySelectorAll('.admin-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + t).classList.add('active');
+            event.target.classList.add('active');
+        };
+
+        window.login = () => {
+            if(document.getElementById('adm-user').value === 'admin' && document.getElementById('adm-pass').value === 'abobob123') {
+                localStorage.setItem('adminAuth', 'true'); nav('admin');
+            } else alert('خطأ');
+        };
+        window.logout = () => { localStorage.removeItem('adminAuth'); nav('home'); };
+
+        window.toggleImgInput = (type) => {
+            document.getElementById('new-img-url').style.display = type === 'url' ? 'block' : 'none';
+            document.getElementById('new-img-file').style.display = type === 'file' ? 'block' : 'none';
+        };
+
+        window.convertBase64 = () => {
+            const file = document.getElementById('new-img-file').files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => { document.getElementById('final-img-data').value = e.target.result; };
+                reader.readAsDataURL(file);
             }
         };
 
-        window.updateSummary = () => {
-            const s = document.getElementById('ord-size').value;
-            const c = document.getElementById('ord-color').value;
-            if(s || c) {
-                document.getElementById('summary-area').style.display = "block";
-                document.getElementById('order-summary').innerText = `المقاس: ${s || 'لم يتم الاختيار'} | اللون: ${c || 'لم يتم الاختيار'}`;
-            }
+        window.toggleClothType = () => {
+            document.getElementById('cloth-type-sel').style.display = document.getElementById('has-cloth-size').checked ? 'inline-block' : 'none';
         };
+        
+        document.getElementById('has-colors').addEventListener('change', (e) => {
+            document.getElementById('color-list').style.display = e.target.checked ? 'block' : 'none';
+        });
 
-        window.submitOrder = async (e) => {
-            e.preventDefault();
-            const s = document.getElementById('ord-size').value;
-            const c = document.getElementById('ord-color').value;
-
-            if((currentProd.hasShoeSize || currentProd.hasClothSize) && !s) return alert("يرجى اختيار المقاس أولاً");
-            if(currentProd.hasColors && !c) return alert("يرجى اختيار اللون أولاً");
-
-            const btn = e.target.querySelector('button');
-            btn.disabled = true; btn.innerText = "جاري إرسال طلبك...";
-
-            const order = {
-                pName: currentProd.name,
-                price: currentProd.price,
-                custName: document.getElementById('ord-name').value,
-                custPhone: document.getElementById('ord-phone').value,
-                wilaya: document.getElementById('ord-wilaya').options[document.getElementById('ord-wilaya').selectedIndex].text,
-                commune: document.getElementById('ord-commune').value,
-                size: s,
-                color: c,
-                date: new Date().toISOString()
+        window.addProduct = async () => {
+            let img = document.querySelector('input[name="imgType"]:checked').value === 'url' ? document.getElementById('new-img-url').value : document.getElementById('final-img-data').value;
+            if(!document.getElementById('new-name').value || !document.getElementById('new-price').value) return alert("مطلوب بيانات");
+            const newProd = {
+                name: document.getElementById('new-name').value,
+                price: document.getElementById('new-price').value,
+                oldPrice: document.getElementById('new-old-price').value,
+                desc: document.getElementById('new-desc').value,
+                image: img,
+                date: new Date().toISOString(),
+                hasShoeSize: document.getElementById('has-shoe-size').checked,
+                hasClothSize: document.getElementById('has-cloth-size').checked,
+                clothType: document.getElementById('cloth-type-sel').value,
+                hasColors: document.getElementById('has-colors').checked,
+                colorsList: document.getElementById('color-list').value
             };
-
-            await addDoc(collection(db, "orders"), order);
-            alert("تم استلام طلبك بنجاح! سنتصل بك قريباً");
-            nav('home');
-            btn.disabled = false; btn.innerText = "إرسال الطلب الآن";
-            e.target.reset();
+            await addDoc(collection(db, "products"), newProd);
+            alert("تم"); nav('admin');
         };
 
-        // --- Initialize App ---
+        window.deleteP = async(id) => { if(confirm('حذف؟')) await deleteDoc(doc(db, "products", id)); };
+
         async function init() {
             loadWilayas();
-            
-            onSnapshot(query(collection(db, "products"), orderBy("date", "desc")), (snap) => {
-                products = [];
-                const list = document.getElementById('products-list');
-                const adminList = document.getElementById('admin-p-list');
-                list.innerHTML = ""; adminList.innerHTML = "";
-                snap.forEach(d => {
-                    const p = {id: d.id, ...d.data()};
-                    products.push(p);
-                    const urlName = p.name.replace(/\s+/g, '-');
-                    list.innerHTML += `
-                        <div class="product-card" onclick="nav('product', '${urlName}')">
-                            <img src="${p.image}" class="p-img">
-                            <div class="p-info">
-                                <h3 style="font-size:1rem; margin-bottom:5px;">${p.name}</h3>
-                                <span class="new-price">${p.price} دج</span>
-                                ${p.oldPrice ? `<span class="old-price">${p.oldPrice}</span>` : ''}
-                            </div>
-                        </div>`;
-                    adminList.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">${p.name} <button onclick="deleteP('${p.id}')">حذف</button></div>`;
-                });
-                
-                // Check if current URL is a product
-                const path = window.location.pathname;
-                if(path.startsWith('/product/')) {
-                    const pName = path.split('/product/')[1];
-                    nav('product', pName);
-                }
-            });
-
             onSnapshot(doc(db, "settings", "main"), (snap) => {
                 if(snap.exists()) {
                     const d = snap.data();
@@ -432,19 +398,32 @@
                         const sCont = document.getElementById('main-slider');
                         sCont.innerHTML = "";
                         d.slider.split('\n').forEach((u, i) => {
-                            if(u.trim()) sCont.innerHTML += `<div class="slide-item" style="position:absolute; width:100%; height:100%; background:url('${u.trim()}') center/cover; opacity:${i===0?1:0}; transition:1s;"></div>`;
-                        });
-                        let idx = 0;
-                        setInterval(() => {
-                            const slides = document.querySelectorAll('.slide-item');
-                            if(slides.length > 1) {
-                                slides[idx].style.opacity = 0;
-                                idx = (idx + 1) % slides.length;
-                                slides[idx].style.opacity = 1;
+                            if(u.trim()) {
+                                const div = document.createElement('div');
+                                div.style = `position:absolute; width:100%; height:100%; background:url('${u.trim()}') center/cover; opacity:${i===0?1:0}; transition:1s;`;
+                                div.className = 'slide-item';
+                                sCont.appendChild(div);
                             }
-                        }, 4000);
+                        });
+                        let idx = 0; setInterval(() => {
+                            const slides = document.querySelectorAll('.slide-item');
+                            if(slides.length > 0) { slides.forEach(s => s.style.opacity = 0); idx = (idx + 1) % slides.length; slides[idx].style.opacity = 1; }
+                        }, 3000);
                     }
                 }
+            });
+
+            onSnapshot(query(collection(db, "products"), orderBy("date", "desc")), (snap) => {
+                products = [];
+                const list = document.getElementById('products-list');
+                const adminList = document.getElementById('admin-p-list');
+                list.innerHTML = ""; adminList.innerHTML = "";
+                snap.forEach(d => {
+                    const p = {id: d.id, ...d.data()};
+                    products.push(p);
+                    list.innerHTML += `<div class="product-card" onclick="openProduct('${p.id}')"><img src="${p.image}" class="p-img"><div class="p-info"><h3>${p.name}</h3><div class="price-box"><span class="new-price">${p.price} دج</span></div></div></div>`;
+                    adminList.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;"><b>${p.name}</b><button onclick="deleteP('${p.id}')">X</button></div>`;
+                });
             });
 
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
@@ -452,49 +431,95 @@
                 tb.innerHTML = "";
                 snap.forEach(d => {
                     const o = d.data();
-                    tb.innerHTML += `<tr><td>${o.custName}<br>${o.custPhone}</td><td>${o.pName}<br><small>${o.size}/${o.color}</small></td><td>${o.price} دج</td></tr>`;
+                    tb.innerHTML += `<tr><td>${new Date(o.date).toLocaleDateString()}</td><td>${o.custName}<br>${o.custPhone}</td><td>${o.pName}</td><td>${o.size || ''}/${o.color || ''}</td></tr>`;
                 });
             });
         }
 
-        // Auth & Admin Actions
-        window.login = () => {
-            if(document.getElementById('adm-user').value === 'admin' && document.getElementById('adm-pass').value === 'abobob123') {
-                localStorage.setItem('adminAuth', 'true'); nav('admin');
-            } else alert('خطأ');
+        window.openProduct = (id) => {
+            currentProd = products.find(p => p.id === id);
+            if(!currentProd) return;
+
+            document.getElementById('p-detail-content').innerHTML = `<img src="${currentProd.image}" style="width:100%; border-radius:8px;"><h1>${currentProd.name}</h1><p>${currentProd.desc || ''}</p><h2>${currentProd.price} دج</h2>`;
+            
+            const container = document.getElementById('dynamic-selectors');
+            container.innerHTML = "";
+
+            // Reset inputs
+            document.getElementById('ord-size').value = "";
+            document.getElementById('ord-color').value = "";
+
+            // Sizes logic
+            let sizes = [];
+            if(currentProd.hasShoeSize) sizes = [36,37,38,39,40,41,42,43,44,45];
+            else if (currentProd.hasClothSize) sizes = currentProd.clothType === 'letters' ? ['S','M','L','XL','XXL'] : [36,38,40,42,44];
+
+            if(sizes.length > 0) {
+                container.innerHTML += `<h4>المقاس:</h4><div class="options-container" id="size-opts"></div>`;
+                sizes.forEach(s => {
+                    const d = document.createElement('div'); d.className = 'circle-option'; d.innerText = s;
+                    d.onclick = () => { 
+                        document.querySelectorAll('#size-opts .circle-option').forEach(x => x.classList.remove('selected'));
+                        d.classList.add('selected'); document.getElementById('ord-size').value = s; updateSummary();
+                    };
+                    document.getElementById('size-opts').appendChild(d);
+                });
+            } else document.getElementById('ord-size').value = "Standard";
+
+            // Colors logic
+            if(currentProd.hasColors && currentProd.colorsList) {
+                container.innerHTML += `<h4>اللون:</h4><div class="options-container" id="col-opts"></div>`;
+                currentProd.colorsList.split(',').forEach(c => {
+                    const d = document.createElement('div'); d.className = 'circle-option'; d.innerText = c.trim();
+                    d.onclick = () => { 
+                        document.querySelectorAll('#col-opts .circle-option').forEach(x => x.classList.remove('selected'));
+                        d.classList.add('selected'); document.getElementById('ord-color').value = c.trim(); updateSummary();
+                    };
+                    document.getElementById('col-opts').appendChild(d);
+                });
+            } else document.getElementById('ord-color').value = "Standard";
+
+            document.getElementById('ord-pid').value = currentProd.id;
+            document.getElementById('ord-pname').value = currentProd.name;
+            document.getElementById('ord-price').value = currentProd.price;
+            
+            nav('product', currentProd.name.replace(/\s+/g, '-'));
         };
-        window.logout = () => { localStorage.removeItem('adminAuth'); nav('home'); };
-        window.tab = (t) => {
-            document.querySelectorAll('.admin-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + t).classList.add('active');
-            event.target.classList.add('active');
+
+        window.updateSummary = () => {
+            const s = document.getElementById('ord-size').value;
+            const c = document.getElementById('ord-color').value;
+            document.getElementById('order-summary').innerText = `المنتج: ${currentProd.name} | المقاس: ${s} | اللون: ${c}`;
         };
-        window.addProduct = async () => {
-            const p = {
-                name: document.getElementById('new-name').value,
-                price: document.getElementById('new-price').value,
-                oldPrice: document.getElementById('new-old-price').value,
-                desc: document.getElementById('new-desc').value,
-                image: document.getElementById('new-img-url').value,
-                hasShoeSize: document.getElementById('has-shoe-size').checked,
-                hasClothSize: document.getElementById('has-cloth-size').checked,
-                clothType: document.getElementById('cloth-type-sel').value,
-                hasColors: document.getElementById('has-colors').checked,
-                colorsList: document.getElementById('color-list').value,
-                date: new Date().toISOString()
-            };
-            await addDoc(collection(db, "products"), p);
-            alert("تم");
+
+        window.submitOrder = async (e) => {
+            e.preventDefault();
+            const s = document.getElementById('ord-size').value;
+            const c = document.getElementById('ord-color').value;
+
+            if((currentProd.hasShoeSize || currentProd.hasClothSize) && !s) return alert("يرجى اختيار المقاس");
+            if(currentProd.hasColors && !c) return alert("يرجى اختيار اللون");
+
+            const btn = e.target.querySelector('button'); btn.disabled = true;
+            await addDoc(collection(db, "orders"), {
+                pName: document.getElementById('ord-pname').value,
+                price: document.getElementById('ord-price').value,
+                custName: document.getElementById('ord-name').value,
+                custPhone: document.getElementById('ord-phone').value,
+                wilaya: document.getElementById('ord-wilaya').options[document.getElementById('ord-wilaya').selectedIndex].text,
+                commune: document.getElementById('ord-commune').value,
+                size: s, color: c, date: new Date().toISOString()
+            });
+            alert("تم استلام طلبك"); nav('home'); btn.disabled = false; e.target.reset();
         };
-        window.deleteP = async(id) => { if(confirm('حذف؟')) await deleteDoc(doc(db, "products", id)); };
+
         window.saveSettings = async () => {
             await setDoc(doc(db, "settings", "main"), {
                 name: document.getElementById('set-name').value,
                 marquee: document.getElementById('set-marq').value,
                 slider: document.getElementById('set-slider').value
             });
-            alert("تم الحفظ");
+            alert("تم الحفظ"); location.reload();
         };
 
         init();
